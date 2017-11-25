@@ -1,17 +1,15 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 public class MainController {
-	
-	public void writeText(ActionEvent actionEvent) {
-		FileLoader fileLoader = new FileLoader();
-		fileLoader.read();
-		
-	}
+// to do 
 	
 	
-	//public 
-
+	
 }
