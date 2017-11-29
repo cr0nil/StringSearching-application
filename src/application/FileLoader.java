@@ -89,7 +89,7 @@ public class FileLoader {
 				ex.printStackTrace();
 			}
 		}
-		System.out.println(odczyt+"tutaj");
+		System.out.println(odczyt+"tutajj");
 		
 	
 	}
