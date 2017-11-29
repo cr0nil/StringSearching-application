@@ -2,98 +2,91 @@ package application;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+import javafx.application.Platform;
 
 //import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 
-public class FileLoader {
-	@FXML
-	private Stage stage;
-	@FXML
-	private Label lbl;
-	public ArrayList<String> odczyt = new ArrayList<String>();
-	
-	public File plik;
+public class FileLoader implements Initializable {
 
-	public FileLoader() {
-		
-	}
+    private Stage stage;
+    public ArrayList<String> odczyt = new ArrayList<String>();
 
-	@FXML
-	private void otworzPlikAction(ActionEvent event) {
-		
-		FileChooser fileChooser = new FileChooser();
-		
-		fileChooser.setTitle("Otwórz Plik");
-		
-		fileChooser.getExtensionFilters().add(new ExtensionFilter("Pliki TXT", "*.txt"));
-		
-		plik = fileChooser.showOpenDialog(stage);
+    public File plik;
+    @FXML
+    private Button btn;
+    @FXML
+    private MenuItem menu_zamknij;
+    @FXML
+    private TextArea textArea;
 
-		
-		if (plik != null) {
-			// Wyswietlenie  ścieżki do pliku.
-			System.out.println("Plik: " + plik.getAbsolutePath());
-			
+    
 
-		}
-		read(plik);
-                
-                System.out.print("test123124");
+    @FXML
+    private void otworzPlikAction(ActionEvent event) {
 
-	}
+        FileChooser fileChooser = new FileChooser();
 
-	public void read(File file) {
-		BufferedReader br = null;
+        fileChooser.setTitle("Otwórz Plik");
 
-		Path sciezkaDoPliku = Paths.get(file.getAbsolutePath());
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Pliki TXT", "*.txt"));
 
-		try {
-			// br = new BufferedReader(new
-			// FileReader("E:\\projInz2\\StringSearching-application\\new2.txt"));
-			String line;
-			odczyt = (ArrayList) Files.readAllLines(sciezkaDoPliku);
-			System.out.println(odczyt);
-			// while ((line = br.readLine()) != null) {
-			//
-			// System.out.println(line);
+        plik = fileChooser.showOpenDialog(stage);
 
-			// }
+        if (plik != null) {
+            // Wyswietlenie  ścieżki do pliku.
+            System.out.println("Plik: " + plik.getAbsolutePath());
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null) {
-					br.close();
-				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-		System.out.println(odczyt+"tutajj");
-		
-	
-	}
-	
+        }
+        read(plik);
+
+    }
+
+    public void read(File file) {
+        BufferedReader br = null;
+        Path sciezkaDoPliku = Paths.get(file.getAbsolutePath());
+
+        try {
+            // br = new BufferedReader(new
+            // FileReader("E:\\projInz2\\StringSearching-application\\new2.txt"));
+            String line;
+            odczyt = (ArrayList) Files.readAllLines(sciezkaDoPliku);
+            System.out.println(odczyt);
+            // while ((line = br.readLine()) != null) {
+            //
+            // System.out.println(line);
+
+            // }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        System.out.println(odczyt + "tutajj");
+
+    }
+
 //	public void view(ActionEvent actionEvent) {
 //	//	Parent root;
 //        try {
@@ -114,15 +107,22 @@ public class FileLoader {
 //        
 // }
 //	}
+    @FXML
+    public void setText(ActionEvent actionEvent) {
 
+        System.out.println(odczyt + "    a  " + odczyt.toString());
+        String kaczka = odczyt.toString();
+        textArea.setText(kaczka);
+    }
 
-	
-	public void setText(ActionEvent actionEvent) {
-		
-		System .out.println(odczyt+"    a  "+odczyt.toString());
-	String kaczka  = odczyt.toString();
-		lbl.setText(kaczka);
-	}
+    @FXML
+    private void zamknijAplikacje(ActionEvent event) {
+        Platform.exit();
+    }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
 
+    }
 
 }
