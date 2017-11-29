@@ -57,7 +57,7 @@ public class FileLoader {
 		}
 		read(plik);
                 
-                System.out.print("test test test");
+                System.out.print("test123124");
 
 	}
 
