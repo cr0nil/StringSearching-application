@@ -56,6 +56,8 @@ public class FileLoader {
 
 		}
 		read(plik);
+                
+                System.out.print("test test test");
 
 	}
 
