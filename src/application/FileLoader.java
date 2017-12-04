@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -36,6 +37,8 @@ public class FileLoader implements Initializable {
     private MenuItem menu_zamknij;
     @FXML
     private TextArea textArea;
+    @FXML
+    private TextField textFieldTag;
 
     
 
@@ -87,33 +90,57 @@ public class FileLoader implements Initializable {
 
 
     }
+    
+    
+    
 
-//	public void view(ActionEvent actionEvent) {
-//	//	Parent root;
-//        try {
-//        	Parent root = FXMLLoader.load(getClass().getResource("Main2.fxml"));
-//            Stage stage = new Stage();
-//            //root = (Parent) fxmlLoader.load();
-//            //
-//
-//            stage.setTitle("My New Stage Title");
-//            stage.setScene(new Scene(root));
-//           
-//            stage.show();
-//          ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-//           
-//        }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//        
-// }
-//	}
+
     @FXML
     public void setText(ActionEvent actionEvent) {
 
         //for(String kaczka:lista)
         String kaczka = lista.toString();
         textArea.setText(kaczka);
+        
+        String tag;
+        String tekst;
+        int m, n, i, j, t;
+        int P[] = new int[100];//maksymalna dlugosc wzorca to 100 symboli
+        tekst = lista.toString();
+        System.out.println("Tekst "+tekst);
+        tag = textFieldTag.getText();
+        System.out.println("Wzorzec "+tag);
+        n = tekst.length();
+        m = tag.length();
+        System.out.println("Indeksy poczatku wzorca w tekscie");
+
+//      obliczenie tablicy P
+        P[0] = 0;
+        P[1] = 0;
+        t = 0;
+        for (j = 2; j <= m; j++) {
+            while ((t > 0) && (tag.charAt(t) != tag.charAt(j - 1))) {
+                t = P[t];
+            }
+            if (tag.charAt(t) == tag.charAt(j - 1)) {
+                t++;
+            }
+            P[j] = t;
+        }
+
+//      algorytm KMP
+        i = 1;
+        j = 0;
+        while (i <= n - m + 1) {
+            j = P[j];
+            while ((j < m) && (tag.charAt(j) == tekst.charAt(i + j - 1))) {
+                j++;
+            }
+            if (j == m) {
+                System.out.println(i);
+            }
+            i = i + Math.max(1, j - P[j]);
+        }
     }
 
     @FXML
@@ -126,6 +153,7 @@ public class FileLoader implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       
 
     }
 
