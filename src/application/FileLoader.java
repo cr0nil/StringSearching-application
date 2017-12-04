@@ -1,5 +1,6 @@
 package application;
 
+import application.dialogs.DialogsUtils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -8,14 +9,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-
-//import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
@@ -41,11 +42,8 @@ public class FileLoader implements Initializable {
     private void otworzPlikAction(ActionEvent event) {
 
         FileChooser fileChooser = new FileChooser();
-
         fileChooser.setTitle("Otwórz Plik");
-
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Pliki TXT", "*.txt"));
-
         plik = fileChooser.showOpenDialog(stage);
 
         if (plik != null) {
@@ -110,14 +108,17 @@ public class FileLoader implements Initializable {
     @FXML
     public void setText(ActionEvent actionEvent) {
 
-        System.out.println(odczyt + "    a  " + odczyt.toString());
+        System.out.println(odczyt);
         String kaczka = odczyt.toString();
         textArea.setText(kaczka);
     }
 
     @FXML
     private void zamknijAplikacje(ActionEvent event) {
-        Platform.exit();
+        Optional<ButtonType> result = DialogsUtils.confirmationDialog();
+        if (result.get() == ButtonType.OK) {
+            Platform.exit();
+        }
     }
     
     @Override
