@@ -5,12 +5,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Scanner;
+import java.util.StringTokenizer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
 public class FileLoader implements Initializable {
 
     private Stage stage;
-    public ArrayList<String> odczyt = new ArrayList<String>();
+    public ArrayList<String> lista = new ArrayList<String>();
 
     public File plik;
     @FXML
@@ -60,16 +61,18 @@ public class FileLoader implements Initializable {
         Path sciezkaDoPliku = Paths.get(file.getAbsolutePath());
 
         try {
-            // br = new BufferedReader(new
-            // FileReader("E:\\projInz2\\StringSearching-application\\new2.txt"));
-            String line;
-            odczyt = (ArrayList) Files.readAllLines(sciezkaDoPliku);
-            System.out.println(odczyt);
-            // while ((line = br.readLine()) != null) {
-            //
-            // System.out.println(line);
 
-            // }
+            //odczyt = (ArrayList) Files.readAllLines(sciezkaDoPliku);
+            //System.out.println(odczyt);
+            Scanner odczyt = new Scanner(file);
+            StringTokenizer token;
+            while(odczyt.hasNextLine()){
+                token = new StringTokenizer(odczyt.nextLine(),",");
+                while(token.hasMoreElements()){
+                    lista.add(token.nextToken());
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -81,7 +84,7 @@ public class FileLoader implements Initializable {
                 ex.printStackTrace();
             }
         }
-        System.out.println(odczyt + "tutajj");
+
 
     }
 
@@ -108,8 +111,8 @@ public class FileLoader implements Initializable {
     @FXML
     public void setText(ActionEvent actionEvent) {
 
-        System.out.println(odczyt);
-        String kaczka = odczyt.toString();
+        //for(String kaczka:lista)
+        String kaczka = lista.toString();
         textArea.setText(kaczka);
     }
 
