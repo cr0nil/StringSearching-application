@@ -35,6 +35,8 @@ target/
 .settings/
 .classpath
 .project
+StringSearching-application/
+
 
 # NetBeans specific
 nbproject/private/
@@ -54,3 +56,4 @@ nb-configuration.xml
 release.properties
 pom.xml.releaseBackup
 pom.xml.tag
+/bin/
