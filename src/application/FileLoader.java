@@ -68,8 +68,12 @@ public class FileLoader implements Initializable {
             // while ((line = br.readLine()) != null) {
             //
             // System.out.println(line);
-
+//String tekst = "kaczaczka";
+            String wzor1  = "kot";//nie dziala
+String wzor = "dok";// dziala here
             // }
+            RabinKarp_Algorithm rabinKarp_Algorithm = new RabinKarp_Algorithm();
+            rabinKarp_Algorithm.RK_algo(odczyt.toString(), wzor);//wzor1
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
