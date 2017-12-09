@@ -29,8 +29,9 @@ public class RabinKarp_Algorithm {
 	/**
 	 * @param args
 	 */
+	public static int ind;
 	public static void RK_algo(String tekst,String wzor) {
-		int m, n, i, j, h1, h2, rm;
+		int m, n,i, j, h1, h2, rm;
 		
 		String wzorzec;
 
@@ -64,8 +65,10 @@ public class RabinKarp_Algorithm {
 			if (h1 == h2)
 				while ((j < m) && (wzor.charAt(j) == tekst.charAt(i + j)))
 					j++;
-			if (j == m)
+			if (j == m) {
 				System.out.println(i + 1);
+				ind = i;	
+			}
 			h2 = ((h2 - tekst.charAt(i) * rm) * r + tekst.charAt(i + m));
 			h2 %= q;
 			if (h2 < 0)
@@ -76,7 +79,14 @@ public class RabinKarp_Algorithm {
 		if (h1 == h2)
 			while ((j < m) && (wzor.charAt(j) == tekst.charAt(i + j)))
 				j++;
-		if (j == m)
+		if (j == m) {
 			System.out.println(i + 1);
+		ind = i;	
+		}
 	}
+
+	public static int getI() {
+		return ind;
+	}
+	
 }
