@@ -35,7 +35,6 @@ target/
 .settings/
 .classpath
 .project
-StringSearching-application/
 
 
 # NetBeans specific
