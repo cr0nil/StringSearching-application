@@ -5,12 +5,20 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+<<<<<<< HEAD
 import java.nio.file.Files;
+=======
+>>>>>>> AlgorytmKMP
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+<<<<<<< HEAD
+=======
+import java.util.Scanner;
+import java.util.StringTokenizer;
+>>>>>>> AlgorytmKMP
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +27,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+<<<<<<< HEAD
+=======
+import javafx.scene.control.TextField;
+>>>>>>> AlgorytmKMP
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -26,7 +38,11 @@ import javafx.stage.Stage;
 public class FileLoader implements Initializable {
 
     private Stage stage;
+<<<<<<< HEAD
     public ArrayList<String> odczyt = new ArrayList<String>();
+=======
+    public ArrayList<String> lista = new ArrayList<String>();
+>>>>>>> AlgorytmKMP
 
     public File plik;
     @FXML
@@ -35,6 +51,11 @@ public class FileLoader implements Initializable {
     private MenuItem menu_zamknij;
     @FXML
     private TextArea textArea;
+<<<<<<< HEAD
+=======
+    @FXML
+    private TextField textFieldTag;
+>>>>>>> AlgorytmKMP
 
     
 
@@ -60,6 +81,7 @@ public class FileLoader implements Initializable {
         Path sciezkaDoPliku = Paths.get(file.getAbsolutePath());
 
         try {
+<<<<<<< HEAD
             // br = new BufferedReader(new
             // FileReader("E:\\projInz2\\StringSearching-application\\new2.txt"));
             String line;
@@ -70,6 +92,20 @@ public class FileLoader implements Initializable {
             // System.out.println(line);
 
             // }
+=======
+
+            //odczyt = (ArrayList) Files.readAllLines(sciezkaDoPliku);
+            //System.out.println(odczyt);
+            Scanner odczyt = new Scanner(file);
+            StringTokenizer token;
+            while(odczyt.hasNextLine()){
+                token = new StringTokenizer(odczyt.nextLine(),",");
+                while(token.hasMoreElements()){
+                    lista.add(token.nextToken());
+                }
+            }
+
+>>>>>>> AlgorytmKMP
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -81,6 +117,7 @@ public class FileLoader implements Initializable {
                 ex.printStackTrace();
             }
         }
+<<<<<<< HEAD
         System.out.println(odczyt + "tutajj");
 
     }
@@ -111,6 +148,62 @@ public class FileLoader implements Initializable {
         System.out.println(odczyt);
         String kaczka = odczyt.toString();
         textArea.setText(kaczka);
+=======
+
+
+    }
+    
+    
+    
+
+
+    @FXML
+    public void setText(ActionEvent actionEvent) {
+
+        //for(String kaczka:lista)
+        String kaczka = lista.toString();
+        textArea.setText(kaczka);
+        
+        String tag;
+        String tekst;
+        int m, n, i, j, t;
+        int P[] = new int[100];//maksymalna dlugosc wzorca to 100 symboli
+        tekst = lista.toString();
+        System.out.println("Tekst "+tekst);
+        tag = textFieldTag.getText();
+        System.out.println("Wzorzec "+tag);
+        n = tekst.length();
+        m = tag.length();
+        System.out.println("Indeksy poczatku wzorca w tekscie");
+
+//      obliczenie tablicy P
+        P[0] = 0;
+        P[1] = 0;
+        t = 0;
+        for (j = 2; j <= m; j++) {
+            while ((t > 0) && (tag.charAt(t) != tag.charAt(j - 1))) {
+                t = P[t];
+            }
+            if (tag.charAt(t) == tag.charAt(j - 1)) {
+                t++;
+            }
+            P[j] = t;
+        }
+
+//      algorytm KMP
+        i = 1;
+        j = 0;
+        while (i <= n - m + 1) {
+            j = P[j];
+            while ((j < m) && (tag.charAt(j) == tekst.charAt(i + j - 1))) {
+                j++;
+            }
+            if (j == m) {
+                System.out.println(i);
+            }
+            i = i + Math.max(1, j - P[j]);
+        }
+>>>>>>> AlgorytmKMP
     }
 
     @FXML
@@ -123,6 +216,10 @@ public class FileLoader implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+<<<<<<< HEAD
+=======
+       
+>>>>>>> AlgorytmKMP
 
     }
 
