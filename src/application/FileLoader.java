@@ -89,10 +89,6 @@ public class FileLoader implements Initializable {
 
 
     }
-    
-    
-    
-
 
     @FXML
     public void setText(ActionEvent actionEvent) {
