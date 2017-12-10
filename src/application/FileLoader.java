@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,6 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import java.util.regex.*;
 
 public class FileLoader implements Initializable {
 
@@ -67,6 +69,7 @@ public class FileLoader implements Initializable {
 			// br = new BufferedReader(new
 			// FileReader("E:\\projInz2\\StringSearching-application\\new2.txt"));
 			String line;
+			
 			odczyt = (ArrayList) Files.readAllLines(sciezkaDoPliku);
 			System.out.println(odczyt);
 			// while ((line = br.readLine()) != null) {
@@ -74,11 +77,11 @@ public class FileLoader implements Initializable {
 			// System.out.println(line);
 			// String tekst = "kaczaczka";
 			String wzor1 = "kot";// nie dziala
-			//String wzor = "dok";// dziala here
+			// String wzor = "dok";// dziala here
 			// }
 
 			// wzor1
-			//System.out.println("indeks" + rabinKarp_Algorithm.getI());
+			// System.out.println("indeks" + rabinKarp_Algorithm.getI());
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -100,20 +103,22 @@ public class FileLoader implements Initializable {
 
 		System.out.println(odczyt);
 		String kaczka = odczyt.toString();
+		regexChecker("([\\;,])", odczyt.toString());
 		textArea.setText(kaczka);
+		textArea.setWrapText(true);
 
 	}
 
 	@FXML
 	public void highlightText() {
-		rabinKarp_Algorithm.RK_algo(odczyt.toString(), wzor.getText().toString());
+		//if dosn't exist key-word
+		rabinKarp_Algorithm.RK_algo(odczyt.toString(),wzor.getText().toString());
 		int start, stop;
 		start = rabinKarp_Algorithm.getI();
 		stop = wzor.getText().length();
-		System.out.println("start : "+stop);
-		stop  = start +stop;
+		stop = start + stop;
+		//
 		textArea.selectRange(start, stop);
-		//textArea.selectRange(stop,start);
 	}
 
 	@FXML
@@ -128,5 +133,15 @@ public class FileLoader implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 
 	}
-
+	public static void regexChecker(String theRegex, String str2Check) { 
+		Pattern pattern = Pattern.compile(theRegex);
+		Matcher regexMatcher = pattern.matcher(str2Check);
+		while(regexMatcher.find()) {
+			if(regexMatcher.group().length() !=0){
+				if(regexMatcher.group().equals(";"));
+				System.out.println("\n");
+				
+			}
+		}
+	}
 }

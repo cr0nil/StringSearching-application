@@ -3,10 +3,11 @@ package application;
 public class RabinKarp_Algorithm {
 	private static final int r = 256; // liczba symboli alfabetu (char 0-255)
 	private static final int q = 9551; // możliwie duża liczba pierwsza
+
 	public RabinKarp_Algorithm() {
-		final int r = 256;
+		final int r = 512;
 		final int q = 9551;
-		//RK_algo(null, null);
+		// RK_algo(null, null);
 	}
 
 	public static int power_modulo_fast(int a, int b, int m) {
@@ -30,15 +31,16 @@ public class RabinKarp_Algorithm {
 	 * @param args
 	 */
 	public static int ind;
-	public static void RK_algo(String tekst,String wzor) {
-		int m, n,i, j, h1, h2, rm;
-		
+
+	public static void RK_algo(String tekst, String wzor) {
+		int m, n, i, j, h1, h2, rm;
+
 		String wzorzec;
 
 		System.out.println("Podaj tekst");
-		//tekst = "kaczka";
+		// tekst = "kaczka";
 		System.out.println("Podaj wzorzec");
-		//wzor = "kacz";
+		// wzor = "kacz";
 
 		n = tekst.length();
 		m = wzor.length();
@@ -67,7 +69,7 @@ public class RabinKarp_Algorithm {
 					j++;
 			if (j == m) {
 				System.out.println(i + 1);
-				ind = i;	
+				ind = i;
 			}
 			h2 = ((h2 - tekst.charAt(i) * rm) * r + tekst.charAt(i + m));
 			h2 %= q;
@@ -81,12 +83,12 @@ public class RabinKarp_Algorithm {
 				j++;
 		if (j == m) {
 			System.out.println(i + 1);
-		ind = i;	
+			ind = i;
 		}
 	}
 
 	public static int getI() {
 		return ind;
 	}
-	
+
 }
