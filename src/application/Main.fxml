@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -35,5 +36,7 @@
         </menus>
       </MenuBar>
       <TextArea fx:id="textArea" layoutY="27.0" prefHeight="278.0" prefWidth="600.0" />
+      <TextField fx:id="textFieldTag" layoutX="130.0" layoutY="327.0" />
+      <Text layoutX="52.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Podaj tag" />
    </children>
 </AnchorPane>
