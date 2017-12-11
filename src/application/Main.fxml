@@ -34,5 +34,6 @@
       <TextArea fx:id="textArea" layoutY="27.0" prefHeight="278.0" prefWidth="600.0" />
       <Button fx:id="rk" layoutX="300.0" layoutY="313.0" mnemonicParsing="false" onAction="#highlightText" prefHeight="25.0" prefWidth="93.0" text="Rabin-Karp" />
       <TextField fx:id="wzor" layoutX="127.0" layoutY="313.0" />
+      <Button layoutX="300.0" layoutY="352.0" mnemonicParsing="false" onAction="#highlightText2" text="Knuth–Morris–Pratt" textFill="#a12e2e" />
    </children>
 </AnchorPane>

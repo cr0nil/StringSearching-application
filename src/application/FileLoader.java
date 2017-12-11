@@ -60,6 +60,7 @@ public class FileLoader implements Initializable {
 	}
 
 	RabinKarp_Algorithm rabinKarp_Algorithm = new RabinKarp_Algorithm();
+	KnuthMorrisPrattAalgorithm knuthMorrisPrattAalgorithm = new KnuthMorrisPrattAalgorithm();
 
 	public void read(File file) {
 		BufferedReader br = null;
@@ -112,6 +113,8 @@ public class FileLoader implements Initializable {
 	@FXML
 	public void highlightText() {
 		//if dosn't exist key-word
+		//knuthMorrisPrattAalgorithm.search(wzor.getText().toString(),odczyt.toString());
+	System.out.println("RK");
 		rabinKarp_Algorithm.RK_algo(odczyt.toString(),wzor.getText().toString());
 		int start, stop;
 		start = rabinKarp_Algorithm.getI();
@@ -120,7 +123,19 @@ public class FileLoader implements Initializable {
 		//
 		textArea.selectRange(start, stop);
 	}
-
+	@FXML
+	public void highlightText2() {
+		//if dosn't exist key-word
+		knuthMorrisPrattAalgorithm.search(wzor.getText().toString(),odczyt.toString());
+	
+	
+		int start, stop;
+		start = knuthMorrisPrattAalgorithm.getInd()-1;
+		stop = wzor.getText().length();
+		stop = start + stop;
+		//
+		textArea.selectRange(start, stop);
+	}
 	@FXML
 	private void zamknijAplikacje(ActionEvent event) {
 		Optional<ButtonType> result = DialogsUtils.confirmationDialog();
