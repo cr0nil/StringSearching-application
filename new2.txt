@@ -1,1 +1,4 @@
-dokument testowy do ladowania w aplikacji 123456 abcdef
+Piraci z Karaibow: thiller, komedia, statek;
+Incepcja: sci-fi, komedia, czas;
+Pulp Fiction: gangsterski, tarantino;
+Prestiz: dramat, thriller;
