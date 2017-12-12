@@ -1,4 +1,4 @@
-Piraci z Karaibow: thiller, komedia, statek;
-Incepcja: sci-fi, komedia, czas;
-Pulp Fiction: gangsterski, tarantino;
-Prestiz: dramat, thriller;
+Piraci z Karaibow: thiller; komedia; statek
+Incepcja: sci-fi; komedia; czas
+Pulp Fiction: gangsterski; tarantino
+Prestiz: dramat; thriller

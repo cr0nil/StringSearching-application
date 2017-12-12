@@ -31,6 +31,9 @@ public class FileLoader implements Initializable {
 
 	private Stage stage;
 	public ArrayList<String> odczyt = new ArrayList<String>();
+	public static int newLineInd;
+	RabinKarp_Algorithm rabinKarp_Algorithm = new RabinKarp_Algorithm();
+	KnuthMorrisPrattAalgorithm knuthMorrisPrattAalgorithm = new KnuthMorrisPrattAalgorithm();
 
 	public File plik;
 	@FXML
@@ -59,9 +62,6 @@ public class FileLoader implements Initializable {
 
 	}
 
-	RabinKarp_Algorithm rabinKarp_Algorithm = new RabinKarp_Algorithm();
-	KnuthMorrisPrattAalgorithm knuthMorrisPrattAalgorithm = new KnuthMorrisPrattAalgorithm();
-
 	public void read(File file) {
 		BufferedReader br = null;
 		Path sciezkaDoPliku = Paths.get(file.getAbsolutePath());
@@ -70,13 +70,10 @@ public class FileLoader implements Initializable {
 			// br = new BufferedReader(new
 			// FileReader("E:\\projInz2\\StringSearching-application\\new2.txt"));
 			String line;
-			
+
 			odczyt = (ArrayList) Files.readAllLines(sciezkaDoPliku);
 			System.out.println(odczyt);
-			// while ((line = br.readLine()) != null) {
-			//
-			// System.out.println(line);
-			// String tekst = "kaczaczka";
+
 			String wzor1 = "kot";// nie dziala
 			// String wzor = "dok";// dziala here
 			// }
@@ -103,39 +100,52 @@ public class FileLoader implements Initializable {
 	public void setText(ActionEvent actionEvent) {
 
 		System.out.println(odczyt);
+
 		String kaczka = odczyt.toString();
-		regexChecker("([\\;,])", odczyt.toString());
+		String text = textArea.getText();
+
 		textArea.setText(kaczka);
+		regexChecker("([\\,])", textArea.getText());
+
 		textArea.setWrapText(true);
 
 	}
 
 	@FXML
 	public void highlightText() {
-		//if dosn't exist key-word
-		//knuthMorrisPrattAalgorithm.search(wzor.getText().toString(),odczyt.toString());
-	System.out.println("RK");
-		rabinKarp_Algorithm.RK_algo(odczyt.toString(),wzor.getText().toString());
+		// if dosn't exist key-word
+		// knuthMorrisPrattAalgorithm.search(wzor.getText().toString(),odczyt.toString());
+		System.out.println("RK");
+
+		rabinKarp_Algorithm.RK_algo(odczyt.toString(), wzor.getText().toString());
 		int start, stop;
 		start = rabinKarp_Algorithm.getI();
 		stop = wzor.getText().length();
 		stop = start + stop;
 		//
 		textArea.selectRange(start, stop);
+
 	}
+
 	@FXML
 	public void highlightText2() {
-		//if dosn't exist key-word
-		knuthMorrisPrattAalgorithm.search(wzor.getText().toString(),odczyt.toString());
-	
-	
-		int start, stop;
-		start = knuthMorrisPrattAalgorithm.getInd()-1;
+		// if dosn't exist key-word
+		textArea.deselect();
+		knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
+
+		int start = 0, stop = 0;
+		start = knuthMorrisPrattAalgorithm.getInd() - 1;
 		stop = wzor.getText().length();
 		stop = start + stop;
-		//
-		textArea.selectRange(start, stop);
+		// i fink dziaaa=> copy^
+
+		if (odczyt.toString().length() < start) {
+			System.out.println("nie ma");
+		} else {
+			textArea.selectRange(start, stop);
+		}
 	}
+
 	@FXML
 	private void zamknijAplikacje(ActionEvent event) {
 		Optional<ButtonType> result = DialogsUtils.confirmationDialog();
@@ -148,14 +158,20 @@ public class FileLoader implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 
 	}
-	public static void regexChecker(String theRegex, String str2Check) { 
+
+	public void regexChecker(String theRegex, String str2Check) {
 		Pattern pattern = Pattern.compile(theRegex);
 		Matcher regexMatcher = pattern.matcher(str2Check);
-		while(regexMatcher.find()) {
-			if(regexMatcher.group().length() !=0){
-				if(regexMatcher.group().equals(";"));
-				System.out.println("\n");
-				
+		newLineInd = 0;
+		int x = 0;
+		while (regexMatcher.find()) {
+			if (regexMatcher.group().length() != 0) {
+
+				newLineInd = regexMatcher.end();
+				newLineInd = newLineInd - x;
+				x--;
+				textArea.insertText(newLineInd, "\n");
+
 			}
 		}
 	}
