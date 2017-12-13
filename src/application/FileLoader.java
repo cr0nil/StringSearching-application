@@ -106,6 +106,7 @@ public class FileLoader implements Initializable {
 
 		textArea.setText(kaczka);
 		regexChecker("([\\,])", textArea.getText());
+		
 
 		textArea.setWrapText(true);
 
@@ -124,6 +125,7 @@ public class FileLoader implements Initializable {
 		stop = start + stop;
 		//
 		textArea.selectRange(start, stop);
+		textArea.getText(start, stop);
 
 	}
 
@@ -134,7 +136,7 @@ public class FileLoader implements Initializable {
 		knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
 
 		int start = 0, stop = 0;
-		start = knuthMorrisPrattAalgorithm.getInd() - 1;
+		start = knuthMorrisPrattAalgorithm.getInd() ;
 		stop = wzor.getText().length();
 		stop = start + stop;
 		// i fink dziaaa=> copy^
@@ -143,6 +145,10 @@ public class FileLoader implements Initializable {
 			System.out.println("nie ma");
 		} else {
 			textArea.selectRange(start, stop);
+			lenghtTitle("([\\:])", textArea.getText());
+			getMovie("([\\,])", textArea.getText());
+			
+			//textArea.getText(start,stop).
 		}
 	}
 
@@ -171,8 +177,56 @@ public class FileLoader implements Initializable {
 				newLineInd = newLineInd - x;
 				x--;
 				textArea.insertText(newLineInd, "\n");
+			
+				//System.out.println("tt");
 
 			}
 		}
 	}
+	
+	public int startLine;
+	public int endLine;
+	public void getMovie(String thReg,String str2) {
+		Pattern pattern = Pattern.compile(thReg);
+		Matcher regexMatcher = pattern.matcher(str2);
+		startLine = 0;
+		int x = 1;
+		while (regexMatcher.find()) {
+			if (regexMatcher.group().length() != 0) {
+				
+				startLine = regexMatcher.start();
+				System.out.println("startLine :"+startLine+" end "+tab2[x]);
+				System.out.println(textArea.getText(startLine+1,tab2[x]));
+				x++;
+
+			}
+		}
+		
+	}
+	public int tab [] ;
+	
+	public int tab2 [] = new int [20];
+ 	public void lenghtTitle(String thReg2,String str3) {
+		Pattern pattern = Pattern.compile(thReg2);
+		Matcher regexMatcher = pattern.matcher(str3);
+		endLine = 0;
+		int x = 0;
+		int i =0;
+		while (regexMatcher.find()) {
+			if (regexMatcher.group().length() != 0) {
+				
+				endLine = regexMatcher.start();
+			
+				//System.out.println(textArea.getText(startLine+1,startLine+10));
+				//tab = new int[10];
+				tab2[i] =endLine;
+				//System.out.println(tab[i]);
+				i++;
+				
+
+			}
+		}
+		//tab2 = tab;
+	}
+	
 }
