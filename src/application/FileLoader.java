@@ -34,6 +34,9 @@ public class FileLoader implements Initializable {
 	public static int newLineInd;
 	RabinKarp_Algorithm rabinKarp_Algorithm = new RabinKarp_Algorithm();
 	KnuthMorrisPrattAalgorithm knuthMorrisPrattAalgorithm = new KnuthMorrisPrattAalgorithm();
+	public int arrayStartLine[] = new int[20];
+
+	public int arrayLenghtTitle[] = new int[21];
 
 	public File plik;
 	@FXML
@@ -72,7 +75,6 @@ public class FileLoader implements Initializable {
 			String line;
 
 			odczyt = (ArrayList) Files.readAllLines(sciezkaDoPliku);
-			System.out.println(odczyt);
 
 			String wzor1 = "kot";// nie dziala
 			// String wzor = "dok";// dziala here
@@ -92,7 +94,6 @@ public class FileLoader implements Initializable {
 				ex.printStackTrace();
 			}
 		}
-		System.out.println(odczyt + "tutajj");
 
 	}
 
@@ -106,7 +107,6 @@ public class FileLoader implements Initializable {
 
 		textArea.setText(kaczka);
 		regexChecker("([\\,])", textArea.getText());
-		
 
 		textArea.setWrapText(true);
 
@@ -135,8 +135,8 @@ public class FileLoader implements Initializable {
 		textArea.deselect();
 		knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
 
-		int start = 0, stop = 0;
-		start = knuthMorrisPrattAalgorithm.getInd() ;
+		int start = 1, stop = 0;
+		start = knuthMorrisPrattAalgorithm.getInd();
 		stop = wzor.getText().length();
 		stop = start + stop;
 		// i fink dziaaa=> copy^
@@ -145,10 +145,31 @@ public class FileLoader implements Initializable {
 			System.out.println("nie ma");
 		} else {
 			textArea.selectRange(start, stop);
+			/*
+			 * 
+			 * pobrany tag zawierający się miedzy poczatkiem na koncem lini(indeks poczatku<
+			 * tag<indeks konca) indeksy w tablicy
+			 * 
+			 * daje indeks miedzy którymi ma być zwrócony tytuł filmu (getMovie)
+			 */
 			lenghtTitle("([\\:])", textArea.getText());
-			getMovie("([\\,])", textArea.getText());
-			
-			//textArea.getText(start,stop).
+
+			System.out.println(arrayStartLine[0] + " " + arrayLenghtTitle[1]);
+
+
+			// TODO only line with key-word
+			// petla do pobierania tytułu filmu w przedziale w którym jest tag
+			int i = 0;
+			while (i < arrayStartLine.length - 1) {
+				if (arrayStartLine[i] < start && start < arrayStartLine[i + 1] - 1) {
+					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
+					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[i + 1]);
+					System.out.println(film);
+				}
+
+				i++;
+			}
+		
 		}
 	}
 
@@ -170,6 +191,7 @@ public class FileLoader implements Initializable {
 		Matcher regexMatcher = pattern.matcher(str2Check);
 		newLineInd = 0;
 		int x = 0;
+		int index = 0;
 		while (regexMatcher.find()) {
 			if (regexMatcher.group().length() != 0) {
 
@@ -177,56 +199,59 @@ public class FileLoader implements Initializable {
 				newLineInd = newLineInd - x;
 				x--;
 				textArea.insertText(newLineInd, "\n");
-			
-				//System.out.println("tt");
+
+				arrayStartLine[index] = newLineInd;
+				// początek każdej lini
+				// System.out.println(" poczatek lini z kluczem : "+ newLineInd );
+				index++;
+				
 
 			}
 		}
 	}
-	
+
 	public int startLine;
 	public int endLine;
-	public void getMovie(String thReg,String str2) {
+
+	public void getMovie(String thReg, String str2) {
 		Pattern pattern = Pattern.compile(thReg);
 		Matcher regexMatcher = pattern.matcher(str2);
 		startLine = 0;
 		int x = 1;
 		while (regexMatcher.find()) {
 			if (regexMatcher.group().length() != 0) {
-				
+
 				startLine = regexMatcher.start();
-				System.out.println("startLine :"+startLine+" end "+tab2[x]);
-				System.out.println(textArea.getText(startLine+1,tab2[x]));
+				
+				// tutaj pobieramy tytul filmu tj od pierwszego znaku do ostatniego
+				// System.out.println(textArea.getText(startLine+1,arrayLenghtTitle[x]));
 				x++;
+
+			}
+
+		}
+
+	}
+
+	// metoda do zapisu indeksu konca tytułu
+	public void lenghtTitle(String thReg2, String str3) {
+		Pattern pattern = Pattern.compile(thReg2);
+		Matcher regexMatcher = pattern.matcher(str3);
+		endLine = 0;
+		int x = 0;
+		int i = 0;
+		while (regexMatcher.find()) {
+			if (regexMatcher.group().length() != 0) {
+
+				endLine = regexMatcher.end();
+
+				arrayLenghtTitle[i] = endLine;
+				// System.out.println(arrayLenghtTitle[i]);
+				i++;
 
 			}
 		}
 		
 	}
-	public int tab [] ;
-	
-	public int tab2 [] = new int [20];
- 	public void lenghtTitle(String thReg2,String str3) {
-		Pattern pattern = Pattern.compile(thReg2);
-		Matcher regexMatcher = pattern.matcher(str3);
-		endLine = 0;
-		int x = 0;
-		int i =0;
-		while (regexMatcher.find()) {
-			if (regexMatcher.group().length() != 0) {
-				
-				endLine = regexMatcher.start();
-			
-				//System.out.println(textArea.getText(startLine+1,startLine+10));
-				//tab = new int[10];
-				tab2[i] =endLine;
-				//System.out.println(tab[i]);
-				i++;
-				
 
-			}
-		}
-		//tab2 = tab;
-	}
-	
 }

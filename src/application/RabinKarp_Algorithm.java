@@ -88,7 +88,7 @@ public class RabinKarp_Algorithm {
 	}
 
 	public static int getI() {
-		return ind;
+		return ind+1;
 	}
 
 }
