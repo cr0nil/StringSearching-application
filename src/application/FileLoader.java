@@ -153,22 +153,34 @@ public class FileLoader implements Initializable {
 			 * daje indeks miedzy którymi ma być zwrócony tytuł filmu (getMovie)
 			 */
 			lenghtTitle("([\\:])", textArea.getText());
-
-			System.out.println(arrayStartLine[0] + " " + arrayLenghtTitle[1]);
+	
 
 
 			// TODO only line with key-word
 			// petla do pobierania tytułu filmu w przedziale w którym jest tag
 			int i = 0;
+			int k = 1;
+			int end;
 			while (i < arrayStartLine.length - 1) {
-				if (arrayStartLine[i] < start && start < arrayStartLine[i + 1] - 1) {
+				if(arrayStartLine[i+1]==0 )
+						end =textArea.getText().length();
+				else {
+					end = arrayStartLine[i+1];
+				}
+				
+				if (arrayStartLine[i] < start && start < end) {
 					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
-					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[i + 1]);
-					System.out.println(film);
+					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k]);
+					System.out.print(film);
+					//System.out.println(arrayStartLine[i]+"   " +arrayLenghtTitle[k]);
 				}
 
 				i++;
+				k++;
+			
+				
 			}
+			System.out.println();
 		
 		}
 	}
