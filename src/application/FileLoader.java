@@ -124,8 +124,53 @@ public class FileLoader implements Initializable {
 		stop = wzor.getText().length();
 		stop = start + stop;
 		//
-		textArea.selectRange(start, stop);
-		textArea.getText(start, stop);
+		if (odczyt.toString().length() < start) {
+			System.out.println("nie ma");
+		} else {
+			textArea.selectRange(start, stop);
+			/*
+			 * 
+			 * pobrany tag zawierający się miedzy poczatkiem na koncem lini(indeks poczatku<
+			 * tag<indeks konca) indeksy w tablicy
+			 * 
+			 * daje indeks miedzy którymi ma być zwrócony tytuł filmu (getMovie)
+			 */
+			lenghtTitle("([\\:])", textArea.getText());
+	
+
+
+			// TODO only line with key-word
+			// petla do pobierania tytułu filmu w przedziale w którym jest tag
+			int i = 0;
+			int  k =0 ;
+			int end;
+			while (i < arrayStartLine.length - 1) {
+				
+				if (arrayStartLine[i+1]==0  )
+						end =textArea.getText().length();
+				else {
+					end = arrayStartLine[i+1]-1;
+				}
+				if (arrayStartLine[i] < start && start < end  ) {
+					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
+					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k+1]);
+					System.out.print(film);
+					//System.out.println(arrayStartLine[i]+"   " +arrayLenghtTitle[k]);
+				}
+				else if(k==0  && arrayStartLine[0]>start )  {
+					String film1 = textArea.getText(1, arrayLenghtTitle[k]);
+					System.out.print(film1);
+					
+					}
+				
+				i++;
+				k++;
+			
+				
+			}
+			System.out.println();
+		
+		}
 
 	}
 
@@ -137,6 +182,7 @@ public class FileLoader implements Initializable {
 
 		int start = 1, stop = 0;
 		start = knuthMorrisPrattAalgorithm.getInd();
+		//System.out.println(start+" <- klucz");
 		stop = wzor.getText().length();
 		stop = start + stop;
 		// i fink dziaaa=> copy^
@@ -159,22 +205,27 @@ public class FileLoader implements Initializable {
 			// TODO only line with key-word
 			// petla do pobierania tytułu filmu w przedziale w którym jest tag
 			int i = 0;
-			int k = 1;
+			int  k =0 ;
 			int end;
 			while (i < arrayStartLine.length - 1) {
-				if(arrayStartLine[i+1]==0 )
+				
+				if (arrayStartLine[i+1]==0  )
 						end =textArea.getText().length();
 				else {
-					end = arrayStartLine[i+1];
+					end = arrayStartLine[i+1]-1;
 				}
-				
-				if (arrayStartLine[i] < start && start < end) {
+				if (arrayStartLine[i] < start && start < end  ) {
 					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
-					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k]);
+					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k+1]);
 					System.out.print(film);
 					//System.out.println(arrayStartLine[i]+"   " +arrayLenghtTitle[k]);
 				}
-
+				else if(k==0  && arrayStartLine[0]>start )  {
+					String film1 = textArea.getText(1, arrayLenghtTitle[k]);
+					System.out.print(film1);
+					
+					}
+				
 				i++;
 				k++;
 			
