@@ -1,6 +1,9 @@
 package application;
 
+import java.util.ArrayList;
+
 public class RabinKarp_Algorithm {
+	public static ArrayList<Integer> poczatki = new ArrayList<Integer>();
 	private static final int r = 256; // liczba symboli alfabetu (char 0-255)
 	private static final int q = 9551; // możliwie duża liczba pierwsza
 
@@ -70,6 +73,7 @@ public class RabinKarp_Algorithm {
 			if (j == m) {
 				System.out.println(i + 1);
 				ind = i;
+				poczatki.add(ind);
 			}
 			h2 = ((h2 - tekst.charAt(i) * rm) * r + tekst.charAt(i + m));
 			h2 %= q;
@@ -84,11 +88,15 @@ public class RabinKarp_Algorithm {
 		if (j == m) {
 			System.out.println(i + 1);
 			ind = i;
+			poczatki.add(ind);
 		}
 	}
 
 	public static int getI() {
 		return ind+1;
+	}
+	public static ArrayList getPocz() {
+		return poczatki;
 	}
 
 }

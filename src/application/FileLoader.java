@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -47,6 +48,34 @@ public class FileLoader implements Initializable {
 	private TextArea textArea;
 	@FXML
 	private TextField wzor;
+	@FXML
+	private RadioButton RKrb;
+	@FXML
+	private RadioButton KNPrb;
+	
+	@FXML
+	public void selectAlgo() {
+		int p =0;
+		if(RKrb.isSelected()) {
+			System.out.println("RK");
+			rabinKarp_Algorithm.RK_algo(odczyt.toString(), wzor.getText().toString());
+			
+			//KNPrb.setSelected(false);
+			for(int i=0;i<=(rabinKarp_Algorithm.getPocz().size()-1);i++) {
+				
+				
+			p = (int) rabinKarp_Algorithm.getPocz().get(i);
+			highlightText(p);
+			System.out.println(p);
+			
+			}
+			rabinKarp_Algorithm.getPocz().clear();
+		}
+		else if(KNPrb.isSelected())
+			//RKrb.setSelected(false);
+			highlightText2();
+		
+	}
 
 	@FXML
 	private void otworzPlikAction(ActionEvent event) {
@@ -112,15 +141,17 @@ public class FileLoader implements Initializable {
 
 	}
 
-	@FXML
-	public void highlightText() {
+	//@FXML
+	public void highlightText(int pocz) {
 		// if dosn't exist key-word
 		// knuthMorrisPrattAalgorithm.search(wzor.getText().toString(),odczyt.toString());
-		System.out.println("RK");
+		
 
-		rabinKarp_Algorithm.RK_algo(odczyt.toString(), wzor.getText().toString());
+		
 		int start, stop;
-		start = rabinKarp_Algorithm.getI();
+		//start = (int)rabinKarp_Algorithm.getPocz().get(0);
+		start = pocz;
+		
 		stop = wzor.getText().length();
 		stop = start + stop;
 		//
@@ -169,7 +200,7 @@ public class FileLoader implements Initializable {
 				
 			}
 			System.out.println();
-		
+			//System.out.println(rabinKarp_Algorithm.getPocz());
 		}
 
 	}
@@ -201,7 +232,7 @@ public class FileLoader implements Initializable {
 			lenghtTitle("([\\:])", textArea.getText());
 	
 
-
+//  
 			// TODO only line with key-word
 			// petla do pobierania tytułu filmu w przedziale w którym jest tag
 			int i = 0;
