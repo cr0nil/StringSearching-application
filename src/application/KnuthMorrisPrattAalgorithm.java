@@ -1,9 +1,11 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class KnuthMorrisPrattAalgorithm {
 	public static int ind;
+	public static ArrayList<Integer> poczatki = new ArrayList<Integer>();
 	public KnuthMorrisPrattAalgorithm() {
 		 
 	}
@@ -46,6 +48,7 @@ public class KnuthMorrisPrattAalgorithm {
             if (j == m) {
                 System.out.println(i);
                 ind = i;
+                poczatki.add(ind);
             }
             i = i + Math.max(1, j - P[j]);
         }
@@ -54,5 +57,8 @@ public class KnuthMorrisPrattAalgorithm {
     }
 	public int getInd() {
 		return ind;
+	}
+	public static ArrayList getPocz() {
+		return poczatki;
 	}
 }

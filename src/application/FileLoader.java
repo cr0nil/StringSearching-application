@@ -32,6 +32,7 @@ public class FileLoader implements Initializable {
 
 	private Stage stage;
 	public ArrayList<String> odczyt = new ArrayList<String>();
+	public ArrayList<String> title =new ArrayList<String>();
 	public static int newLineInd;
 	RabinKarp_Algorithm rabinKarp_Algorithm = new RabinKarp_Algorithm();
 	KnuthMorrisPrattAalgorithm knuthMorrisPrattAalgorithm = new KnuthMorrisPrattAalgorithm();
@@ -52,10 +53,13 @@ public class FileLoader implements Initializable {
 	private RadioButton RKrb;
 	@FXML
 	private RadioButton KNPrb;
+	@FXML 
+	private TextArea titleArea;
 	
 	@FXML
 	public void selectAlgo() {
 		int p =0;
+		title.clear();
 		if(RKrb.isSelected()) {
 			System.out.println("RK");
 			rabinKarp_Algorithm.RK_algo(odczyt.toString(), wzor.getText().toString());
@@ -71,9 +75,19 @@ public class FileLoader implements Initializable {
 			}
 			rabinKarp_Algorithm.getPocz().clear();
 		}
-		else if(KNPrb.isSelected())
+		else {
+			System.out.println("KNP");
+			knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
+			for(int i=0;i<=(knuthMorrisPrattAalgorithm.getPocz().size()-1);i++) {
+				
+				
+				p = (int) knuthMorrisPrattAalgorithm.getPocz().get(i);
+				highlightText(p);
+			}
+		}
 			//RKrb.setSelected(false);
-			highlightText2();
+		//	knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
+			//
 		
 	}
 
@@ -145,6 +159,7 @@ public class FileLoader implements Initializable {
 	public void highlightText(int pocz) {
 		// if dosn't exist key-word
 		// knuthMorrisPrattAalgorithm.search(wzor.getText().toString(),odczyt.toString());
+		// TODO zapisywanie tytułuów do arrayLIsty by je sortować
 		
 
 		
@@ -173,7 +188,7 @@ public class FileLoader implements Initializable {
 			// TODO only line with key-word
 			// petla do pobierania tytułu filmu w przedziale w którym jest tag
 			int i = 0;
-			int  k =0 ;
+			int  k =0 ;//
 			int end;
 			while (i < arrayStartLine.length - 1) {
 				
@@ -182,16 +197,22 @@ public class FileLoader implements Initializable {
 				else {
 					end = arrayStartLine[i+1]-1;
 				}
-				if (arrayStartLine[i] < start && start < end  ) {
+				if (arrayStartLine[i] < start && start < end && arrayLenghtTitle[k+1]>2 ) {
 					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
 					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k+1]);
-					System.out.print(film);
+
+					title.add(film);
+					System.out.print(title);
+					titleArea.insertText(i, "\n"+film);
+					
 					//System.out.println(arrayStartLine[i]+"   " +arrayLenghtTitle[k]);
 				}
 				else if(k==0  && arrayStartLine[0]>start )  {
 					String film1 = textArea.getText(1, arrayLenghtTitle[k]);
-					System.out.print(film1);
-					
+					//System.out.print("*"+film1+"*");
+					title.add(film1);
+					//title.sort();
+					titleArea.setText("\n"+film1);
 					}
 				
 				i++;
@@ -199,73 +220,74 @@ public class FileLoader implements Initializable {
 			
 				
 			}
+			
 			System.out.println();
 			//System.out.println(rabinKarp_Algorithm.getPocz());
 		}
 
 	}
 
-	@FXML
-	public void highlightText2() {
-		// if dosn't exist key-word
-		textArea.deselect();
-		knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
-
-		int start = 1, stop = 0;
-		start = knuthMorrisPrattAalgorithm.getInd();
-		//System.out.println(start+" <- klucz");
-		stop = wzor.getText().length();
-		stop = start + stop;
-		// i fink dziaaa=> copy^
-
-		if (odczyt.toString().length() < start) {
-			System.out.println("nie ma");
-		} else {
-			textArea.selectRange(start, stop);
-			/*
-			 * 
-			 * pobrany tag zawierający się miedzy poczatkiem na koncem lini(indeks poczatku<
-			 * tag<indeks konca) indeksy w tablicy
-			 * 
-			 * daje indeks miedzy którymi ma być zwrócony tytuł filmu (getMovie)
-			 */
-			lenghtTitle("([\\:])", textArea.getText());
-	
-
-//  
-			// TODO only line with key-word
-			// petla do pobierania tytułu filmu w przedziale w którym jest tag
-			int i = 0;
-			int  k =0 ;
-			int end;
-			while (i < arrayStartLine.length - 1) {
-				
-				if (arrayStartLine[i+1]==0  )
-						end =textArea.getText().length();
-				else {
-					end = arrayStartLine[i+1]-1;
-				}
-				if (arrayStartLine[i] < start && start < end  ) {
-					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
-					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k+1]);
-					System.out.print(film);
-					//System.out.println(arrayStartLine[i]+"   " +arrayLenghtTitle[k]);
-				}
-				else if(k==0  && arrayStartLine[0]>start )  {
-					String film1 = textArea.getText(1, arrayLenghtTitle[k]);
-					System.out.print(film1);
-					
-					}
-				
-				i++;
-				k++;
-			
-				
-			}
-			System.out.println();
-		
-		}
-	}
+//	@FXML
+//	public void highlightText2() {
+//		// if dosn't exist key-word
+//		textArea.deselect();
+//		//knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
+//
+//		int start = 1, stop = 0;
+//		start = knuthMorrisPrattAalgorithm.getInd();
+//		//System.out.println(start+" <- klucz");
+//		stop = wzor.getText().length();
+//		stop = start + stop;
+//		// i fink dziaaa=> copy^
+//
+//		if (odczyt.toString().length() < start) {
+//			System.out.println("nie ma");
+//		} else {
+//			textArea.selectRange(start, stop);
+//			/*
+//			 * 
+//			 * pobrany tag zawierający się miedzy poczatkiem na koncem lini(indeks poczatku<
+//			 * tag<indeks konca) indeksy w tablicy
+//			 * 
+//			 * daje indeks miedzy którymi ma być zwrócony tytuł filmu (getMovie)
+//			 */
+//			lenghtTitle("([\\:])", textArea.getText());
+//	
+//
+////  
+//			// TODO only line with key-word
+//			// petla do pobierania tytułu filmu w przedziale w którym jest tag
+//			int i = 0;
+//			int  k =0 ;
+//			int end;
+//			while (i < arrayStartLine.length - 1) {
+//				
+//				if (arrayStartLine[i+1]==0  )
+//						end =textArea.getText().length();
+//				else {
+//					end = arrayStartLine[i+1]-1;
+//				}
+//				if (arrayStartLine[i] < start && start < end  ) {
+//					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
+//					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k+1]);
+//					System.out.print(film);
+//					//System.out.println(arrayStartLine[i]+"   " +arrayLenghtTitle[k]);
+//				}
+//				else if(k==0  && arrayStartLine[0]>start )  {
+//					String film1 = textArea.getText(1, arrayLenghtTitle[k]);
+//					System.out.print(film1);
+//					
+//					}
+//				
+//				i++;
+//				k++;
+//			
+//				
+//			}
+//			System.out.println();
+//		
+//		}
+//	}
 
 	@FXML
 	private void zamknijAplikacje(ActionEvent event) {

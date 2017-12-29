@@ -72,7 +72,7 @@ public class RabinKarp_Algorithm {
 					j++;
 			if (j == m) {
 				System.out.println(i + 1);
-				ind = i;
+				ind = i+1;
 				poczatki.add(ind);
 			}
 			h2 = ((h2 - tekst.charAt(i) * rm) * r + tekst.charAt(i + m));
@@ -87,7 +87,7 @@ public class RabinKarp_Algorithm {
 				j++;
 		if (j == m) {
 			System.out.println(i + 1);
-			ind = i;
+			ind = i+1;
 			poczatki.add(ind);
 		}
 	}
