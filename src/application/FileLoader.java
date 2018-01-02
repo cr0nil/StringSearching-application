@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -58,8 +60,10 @@ public class FileLoader implements Initializable {
 	
 	@FXML
 	public void selectAlgo() {
+		titleArea.clear();
+		
 		int p =0;
-		title.clear();
+		
 		if(RKrb.isSelected()) {
 			System.out.println("RK");
 			rabinKarp_Algorithm.RK_algo(odczyt.toString(), wzor.getText().toString());
@@ -84,7 +88,10 @@ public class FileLoader implements Initializable {
 				p = (int) knuthMorrisPrattAalgorithm.getPocz().get(i);
 				highlightText(p);
 			}
+			knuthMorrisPrattAalgorithm.getPocz().clear();
 		}
+		loadTitle();
+		
 			//RKrb.setSelected(false);
 		//	knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
 			//
@@ -173,6 +180,7 @@ public class FileLoader implements Initializable {
 		if (odczyt.toString().length() < start) {
 			System.out.println("nie ma");
 		} else {
+			//for(int k=0;k<arrayStartLine.length;k++)
 			textArea.selectRange(start, stop);
 			/*
 			 * 
@@ -189,6 +197,7 @@ public class FileLoader implements Initializable {
 			// petla do pobierania tytułu filmu w przedziale w którym jest tag
 			int i = 0;
 			int  k =0 ;//
+			String film;
 			int end;
 			while (i < arrayStartLine.length - 1) {
 				
@@ -199,20 +208,20 @@ public class FileLoader implements Initializable {
 				}
 				if (arrayStartLine[i] < start && start < end && arrayLenghtTitle[k+1]>2 ) {
 					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
-					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k+1]);
+					 film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k+1]);
 
 					title.add(film);
-					System.out.print(title);
-					titleArea.insertText(i, "\n"+film);
+					//System.out.print(title);
+					//titleArea.insertText(i, "\n"+film);
 					
 					//System.out.println(arrayStartLine[i]+"   " +arrayLenghtTitle[k]);
 				}
 				else if(k==0  && arrayStartLine[0]>start )  {
-					String film1 = textArea.getText(1, arrayLenghtTitle[k]);
+					 film = textArea.getText(1, arrayLenghtTitle[k]);
 					//System.out.print("*"+film1+"*");
-					title.add(film1);
+					title.add(film);
 					//title.sort();
-					titleArea.setText("\n"+film1);
+					//titleArea.setText(film+"\n");
 					}
 				
 				i++;
@@ -220,11 +229,26 @@ public class FileLoader implements Initializable {
 			
 				
 			}
-			
+			Collections.sort(title);
 			System.out.println();
 			//System.out.println(rabinKarp_Algorithm.getPocz());
 		}
 
+	}
+	
+	/*
+	 * metoda ładujaca posortowane tyttuły
+	 */
+	public void loadTitle() {
+	
+		int i ;
+		for(i =0;i<title.size();i++) {
+			//titleArea.insertText(i, title.get(i)+"\n");
+			titleArea.appendText(title.get(i)+"\n");
+			
+		}
+		
+		title.clear();
 	}
 
 //	@FXML
