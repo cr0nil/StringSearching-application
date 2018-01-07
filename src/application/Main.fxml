@@ -44,5 +44,6 @@
       <RadioButton fx:id="KNPrb" layoutX="440.0" layoutY="344.0" mnemonicParsing="false" text="KNP" toggleGroup="$algoGroup" />
       <Button layoutX="510.0" layoutY="332.0" mnemonicParsing="false" onAction="#selectAlgo" text="Button" />
       <TextArea fx:id="titleArea" layoutX="371.0" layoutY="27.0" prefHeight="283.0" prefWidth="321.0" wrapText="true" />
+      <RadioButton layoutX="441.0" layoutY="369.0" mnemonicParsing="false" text="METODA3" toggleGroup="$algoGroup" />
    </children>
 </AnchorPane>

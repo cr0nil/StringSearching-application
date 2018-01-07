@@ -25,6 +25,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -34,14 +35,17 @@ public class FileLoader implements Initializable {
 
 	private Stage stage;
 	public ArrayList<String> odczyt = new ArrayList<String>();
-	public ArrayList<String> title =new ArrayList<String>();
+	public ArrayList<String> title = new ArrayList<String>();
+	public ArrayList<String> tags = new ArrayList<String>();
 	public static int newLineInd;
 	RabinKarp_Algorithm rabinKarp_Algorithm = new RabinKarp_Algorithm();
 	KnuthMorrisPrattAalgorithm knuthMorrisPrattAalgorithm = new KnuthMorrisPrattAalgorithm();
+	Method3 method3 = new Method3(); 
 	public int arrayStartLine[] = new int[20];
-
+public ArrayList<Integer> TagsId= new ArrayList<Integer>();
 	public int arrayLenghtTitle[] = new int[21];
-
+	//public int TagsId[] = new int[21];
+	
 	public File plik;
 	@FXML
 	private Button btn;
@@ -55,48 +59,68 @@ public class FileLoader implements Initializable {
 	private RadioButton RKrb;
 	@FXML
 	private RadioButton KNPrb;
-	@FXML 
+	@FXML
 	private TextArea titleArea;
-	
+
 	@FXML
 	public void selectAlgo() {
+		
 		titleArea.clear();
+		tag("([\\:])", wzor.getText());
 		
-		int p =0;
+		for(int k =0 ;k<TagsId.size()-1;k++) {
+			if(TagsId.get(k+1)!=0)
+		tags.add(wzor.getText(TagsId.get(k), TagsId.get(k+1)));
+			else 				
+				tags.add(wzor.getText(TagsId.get(k)+1,wzor.getLength()));
+		}
+		// int x = TagsId.length;
+		//tags.add(wzor.getText(TagsId[0],TagsId[1]));
 		
-		if(RKrb.isSelected()) {
+		int p = 0;
+//todo
+//wzor to tags<1,2,3....> wywolane tags.size razy
+		
+//jesli n tagow jest w tej samej lini to zwracam film
+		// 
+		//System.out.println("rozmiar tags "+tags.size());
+		for(int j=0;j<tags.size();j++) {
+		
+		if (RKrb.isSelected()) {
 			System.out.println("RK");
-			rabinKarp_Algorithm.RK_algo(odczyt.toString(), wzor.getText().toString());
-			
-			//KNPrb.setSelected(false);
-			for(int i=0;i<=(rabinKarp_Algorithm.getPocz().size()-1);i++) {
-				
-				
-			p = (int) rabinKarp_Algorithm.getPocz().get(i);
-			highlightText(p);
-			System.out.println(p);
-			
+			rabinKarp_Algorithm.RK_algo(odczyt.toString(), tags.get(j));//tags.get(j)
+
+			// KNPrb.setSelected(false);
+			for (int i = 0; i <= (rabinKarp_Algorithm.getPocz().size() - 1); i++) {
+
+				p = (int) rabinKarp_Algorithm.getPocz().get(i);
+				highlightText(p);
+			//	System.out.println(p+"nis");
+
 			}
 			rabinKarp_Algorithm.getPocz().clear();
-		}
-		else {
+		} else if(KNPrb.isSelected()){
 			System.out.println("KNP");
-			knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
-			for(int i=0;i<=(knuthMorrisPrattAalgorithm.getPocz().size()-1);i++) {
-				
-				
+			knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());//tags.get(j)
+			for (int i = 0; i <= (knuthMorrisPrattAalgorithm.getPocz().size() - 1); i++) {
+
 				p = (int) knuthMorrisPrattAalgorithm.getPocz().get(i);
 				highlightText(p);
 			}
 			knuthMorrisPrattAalgorithm.getPocz().clear();
 		}
+		else {
+			System.out.println("metoda3");
+			method3.szukaj(wzor.getText().toString(),odczyt.toString() );
+		}
+		
+		}
+		
 		loadTitle();
-		
-			//RKrb.setSelected(false);
-		//	knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
-			//
-		
+		tags.clear();
 	}
+
+	
 
 	@FXML
 	private void otworzPlikAction(ActionEvent event) {
@@ -126,11 +150,6 @@ public class FileLoader implements Initializable {
 
 			odczyt = (ArrayList) Files.readAllLines(sciezkaDoPliku);
 
-			String wzor1 = "kot";// nie dziala
-			// String wzor = "dok";// dziala here
-			// }
-
-			// wzor1
 			// System.out.println("indeks" + rabinKarp_Algorithm.getI());
 
 		} catch (IOException e) {
@@ -162,27 +181,26 @@ public class FileLoader implements Initializable {
 
 	}
 
-	//@FXML
+	// @FXML
 	public void highlightText(int pocz) {
 		// if dosn't exist key-word
 		// knuthMorrisPrattAalgorithm.search(wzor.getText().toString(),odczyt.toString());
 		// TODO zapisywanie tytułuów do arrayLIsty by je sortować
 		
-
-		
 		int start, stop;
-		//start = (int)rabinKarp_Algorithm.getPocz().get(0);
+		// start = (int)rabinKarp_Algorithm.getPocz().get(0);
 		start = pocz;
-		
+
 		stop = wzor.getText().length();
 		stop = start + stop;
 		//
 		if (odczyt.toString().length() < start) {
 			System.out.println("nie ma");
 		} else {
-			//for(int k=0;k<arrayStartLine.length;k++)
+			// for(int k=0;k<arrayStartLine.length;k++)
 			textArea.selectRange(start, stop);
-			/*
+
+					/*
 			 * 
 			 * pobrany tag zawierający się miedzy poczatkiem na koncem lini(indeks poczatku<
 			 * tag<indeks konca) indeksy w tablicy
@@ -190,128 +208,124 @@ public class FileLoader implements Initializable {
 			 * daje indeks miedzy którymi ma być zwrócony tytuł filmu (getMovie)
 			 */
 			lenghtTitle("([\\:])", textArea.getText());
-	
-
+			
 
 			// TODO only line with key-word
 			// petla do pobierania tytułu filmu w przedziale w którym jest tag
 			int i = 0;
-			int  k =0 ;//
+			int k = 0;//
 			String film;
 			int end;
 			while (i < arrayStartLine.length - 1) {
-				
-				if (arrayStartLine[i+1]==0  )
-						end =textArea.getText().length();
+
+				if (arrayStartLine[i + 1] == 0)
+					end = textArea.getText().length();
 				else {
-					end = arrayStartLine[i+1]-1;
+					end = arrayStartLine[i + 1] - 1;
 				}
-				if (arrayStartLine[i] < start && start < end && arrayLenghtTitle[k+1]>2 ) {
+				if (arrayStartLine[i] < start && start < end && arrayLenghtTitle[k + 1] > 2) {
 					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
-					 film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k+1]);
+					film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k + 1]);
 
 					title.add(film);
-					//System.out.print(title);
-					//titleArea.insertText(i, "\n"+film);
-					
-					//System.out.println(arrayStartLine[i]+"   " +arrayLenghtTitle[k]);
-				}
-				else if(k==0  && arrayStartLine[0]>start )  {
-					 film = textArea.getText(1, arrayLenghtTitle[k]);
-					//System.out.print("*"+film1+"*");
-					title.add(film);
-					//title.sort();
-					//titleArea.setText(film+"\n");
-					}
 				
+				} else if (k == 0 && arrayStartLine[0] > start) {
+					film = textArea.getText(1, arrayLenghtTitle[k]);
+				
+					title.add(film);
+					
+				}
+
 				i++;
 				k++;
-			
-				
+
 			}
 			Collections.sort(title);
 			System.out.println();
-			//System.out.println(rabinKarp_Algorithm.getPocz());
+			// System.out.println(rabinKarp_Algorithm.getPocz());
 		}
 
 	}
-	
+
 	/*
 	 * metoda ładujaca posortowane tyttuły
 	 */
 	public void loadTitle() {
-	
-		int i ;
-		for(i =0;i<title.size();i++) {
-			//titleArea.insertText(i, title.get(i)+"\n");
-			titleArea.appendText(title.get(i)+"\n");
-			
+
+		int i;
+		for (i = 0; i < title.size(); i++) {
+			// titleArea.insertText(i, title.get(i)+"\n");
+			titleArea.appendText(title.get(i) + "\n");
+			System.out.println(title);
+
 		}
-		
+
 		title.clear();
 	}
 
-//	@FXML
-//	public void highlightText2() {
-//		// if dosn't exist key-word
-//		textArea.deselect();
-//		//knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());
-//
-//		int start = 1, stop = 0;
-//		start = knuthMorrisPrattAalgorithm.getInd();
-//		//System.out.println(start+" <- klucz");
-//		stop = wzor.getText().length();
-//		stop = start + stop;
-//		// i fink dziaaa=> copy^
-//
-//		if (odczyt.toString().length() < start) {
-//			System.out.println("nie ma");
-//		} else {
-//			textArea.selectRange(start, stop);
-//			/*
-//			 * 
-//			 * pobrany tag zawierający się miedzy poczatkiem na koncem lini(indeks poczatku<
-//			 * tag<indeks konca) indeksy w tablicy
-//			 * 
-//			 * daje indeks miedzy którymi ma być zwrócony tytuł filmu (getMovie)
-//			 */
-//			lenghtTitle("([\\:])", textArea.getText());
-//	
-//
-////  
-//			// TODO only line with key-word
-//			// petla do pobierania tytułu filmu w przedziale w którym jest tag
-//			int i = 0;
-//			int  k =0 ;
-//			int end;
-//			while (i < arrayStartLine.length - 1) {
-//				
-//				if (arrayStartLine[i+1]==0  )
-//						end =textArea.getText().length();
-//				else {
-//					end = arrayStartLine[i+1]-1;
-//				}
-//				if (arrayStartLine[i] < start && start < end  ) {
-//					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
-//					String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k+1]);
-//					System.out.print(film);
-//					//System.out.println(arrayStartLine[i]+"   " +arrayLenghtTitle[k]);
-//				}
-//				else if(k==0  && arrayStartLine[0]>start )  {
-//					String film1 = textArea.getText(1, arrayLenghtTitle[k]);
-//					System.out.print(film1);
-//					
-//					}
-//				
-//				i++;
-//				k++;
-//			
-//				
-//			}
-//			System.out.println();
-//		
-//		}
-//	}
+	// @FXML
+	// public void highlightText2() {
+	// // if dosn't exist key-word
+	// textArea.deselect();
+	// //knuthMorrisPrattAalgorithm.search(wzor.getText().toString(),
+	// odczyt.toString());
+	//
+	// int start = 1, stop = 0;
+	// start = knuthMorrisPrattAalgorithm.getInd();
+	// //System.out.println(start+" <- klucz");
+	// stop = wzor.getText().length();
+	// stop = start + stop;
+	// // i fink dziaaa=> copy^
+	//
+	// if (odczyt.toString().length() < start) {
+	// System.out.println("nie ma");
+	// } else {
+	// textArea.selectRange(start, stop);
+	// /*
+	// *
+	// * pobrany tag zawierający się miedzy poczatkiem na koncem lini(indeks
+	// poczatku<
+	// * tag<indeks konca) indeksy w tablicy
+	// *
+	// * daje indeks miedzy którymi ma być zwrócony tytuł filmu (getMovie)
+	// */
+	// lenghtTitle("([\\:])", textArea.getText());
+	//
+	//
+	////
+	// // TODO only line with key-word
+	// // petla do pobierania tytułu filmu w przedziale w którym jest tag
+	// int i = 0;
+	// int k =0 ;
+	// int end;
+	// while (i < arrayStartLine.length - 1) {
+	//
+	// if (arrayStartLine[i+1]==0 )
+	// end =textArea.getText().length();
+	// else {
+	// end = arrayStartLine[i+1]-1;
+	// }
+	// if (arrayStartLine[i] < start && start < end ) {
+	// // System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
+	// String film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k+1]);
+	// System.out.print(film);
+	// //System.out.println(arrayStartLine[i]+" " +arrayLenghtTitle[k]);
+	// }
+	// else if(k==0 && arrayStartLine[0]>start ) {
+	// String film1 = textArea.getText(1, arrayLenghtTitle[k]);
+	// System.out.print(film1);
+	//
+	// }
+	//
+	// i++;
+	// k++;
+	//
+	//
+	// }
+	// System.out.println();
+	//
+	// }
+	// }
 
 	@FXML
 	private void zamknijAplikacje(ActionEvent event) {
@@ -342,9 +356,8 @@ public class FileLoader implements Initializable {
 
 				arrayStartLine[index] = newLineInd;
 				// początek każdej lini
-				// System.out.println(" poczatek lini z kluczem : "+ newLineInd );
-				index++;
 				
+				index++;
 
 			}
 		}
@@ -352,7 +365,31 @@ public class FileLoader implements Initializable {
 
 	public int startLine;
 	public int endLine;
+	
 
+	public void tag(String thRege, String str3) {
+		int nextTag;
+		Pattern pattern = Pattern.compile(thRege);
+		Matcher regexMatcher = pattern.matcher(str3);
+		nextTag = 0;
+		int x = 0;
+		TagsId.add(0,0);
+		int i = 1;
+		while (regexMatcher.find()) {
+			if (regexMatcher.group().length() != 0) {
+
+				nextTag = regexMatcher.start();
+				TagsId.add(i, nextTag);
+				System.out.println(nextTag);
+				i++;
+
+			}
+		}
+		
+		 
+
+		
+	}
 	public void getMovie(String thReg, String str2) {
 		Pattern pattern = Pattern.compile(thReg);
 		Matcher regexMatcher = pattern.matcher(str2);
@@ -362,7 +399,7 @@ public class FileLoader implements Initializable {
 			if (regexMatcher.group().length() != 0) {
 
 				startLine = regexMatcher.start();
-				
+
 				// tutaj pobieramy tytul filmu tj od pierwszego znaku do ostatniego
 				// System.out.println(textArea.getText(startLine+1,arrayLenghtTitle[x]));
 				x++;
@@ -391,7 +428,7 @@ public class FileLoader implements Initializable {
 
 			}
 		}
-		
+
 	}
 
 }
