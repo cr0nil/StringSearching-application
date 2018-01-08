@@ -9,10 +9,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="695.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FileLoader">
+<AnchorPane prefHeight="491.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FileLoader">
    <children>
-      <Button fx:id="btn" layoutX="14.0" layoutY="313.0" mnemonicParsing="false" onAction="#setText" prefHeight="25.0" prefWidth="106.0" text="Wczytaj tekst" />
+      <Button fx:id="btn" layoutX="14.0" layoutY="410.0" mnemonicParsing="false" onAction="#setText" prefHeight="25.0" prefWidth="106.0" text="Wczytaj tekst" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="498.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="2.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -33,17 +35,20 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TextArea fx:id="textArea" layoutY="27.0" prefHeight="283.0" prefWidth="359.0" />
-      <Button fx:id="rk" disable="true" layoutX="300.0" layoutY="313.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Rabin-Karp" />
-      <TextField fx:id="wzor" layoutX="127.0" layoutY="313.0" />
-      <Button disable="true" layoutX="300.0" layoutY="352.0" mnemonicParsing="false" text="Knuth–Morris–Pratt" textFill="#a12e2e" />
-      <RadioButton fx:id="RKrb" layoutX="440.0" layoutY="317.0" mnemonicParsing="false" text="RK">
+      <TextArea fx:id="textArea" layoutY="27.0" prefHeight="367.0" prefWidth="379.0" />
+      <TextField fx:id="wzor" layoutX="200.0" layoutY="411.0" />
+      <RadioButton fx:id="RKrb" layoutX="438.0" layoutY="402.0" mnemonicParsing="false" text="RK">
          <toggleGroup>
             <ToggleGroup fx:id="algoGroup" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="KNPrb" layoutX="440.0" layoutY="344.0" mnemonicParsing="false" text="KNP" toggleGroup="$algoGroup" />
-      <Button layoutX="510.0" layoutY="332.0" mnemonicParsing="false" onAction="#selectAlgo" text="Button" />
-      <TextArea fx:id="titleArea" layoutX="371.0" layoutY="27.0" prefHeight="283.0" prefWidth="321.0" wrapText="true" />
-      <RadioButton layoutX="441.0" layoutY="369.0" mnemonicParsing="false" text="METODA3" toggleGroup="$algoGroup" />
+      <RadioButton fx:id="KNPrb" layoutX="438.0" layoutY="427.0" mnemonicParsing="false" text="KNP" toggleGroup="$algoGroup" />
+      <Button layoutX="577.0" layoutY="423.0" mnemonicParsing="false" onAction="#selectAlgo" text="Znajdź" />
+      <TextArea fx:id="titleArea" layoutX="398.0" layoutY="27.0" prefHeight="367.0" prefWidth="393.0" wrapText="true" />
+      <RadioButton layoutX="438.0" layoutY="449.0" mnemonicParsing="false" text="METODA3" toggleGroup="$algoGroup" />
+      <Text layoutX="160.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TAG:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

@@ -68,12 +68,7 @@ public ArrayList<Integer> TagsId= new ArrayList<Integer>();
 		titleArea.clear();
 		tag("([\\:])", wzor.getText());
 		
-		for(int k =0 ;k<TagsId.size()-1;k++) {
-			if(TagsId.get(k+1)!=0)
-		tags.add(wzor.getText(TagsId.get(k), TagsId.get(k+1)));
-			else 				
-				tags.add(wzor.getText(TagsId.get(k)+1,wzor.getLength()));
-		}
+		
 		// int x = TagsId.length;
 		//tags.add(wzor.getText(TagsId[0],TagsId[1]));
 		
@@ -84,10 +79,24 @@ public ArrayList<Integer> TagsId= new ArrayList<Integer>();
 //jesli n tagow jest w tej samej lini to zwracam film
 		// 
 		//System.out.println("rozmiar tags "+tags.size());
-		for(int j=0;j<tags.size();j++) {
+		//for(int j=0;j<tags.size();j++) {
 		
 		if (RKrb.isSelected()) {
+			int z =TagsId.size();
+			if(z>1) {
+			tags.add(wzor.getText(TagsId.get(0), TagsId.get(1)));
+			
+			for(int k =1 ;k<TagsId.size()-1;k++) {
+				if(TagsId.get(k+1)!=0) {
+			tags.add(wzor.getText(TagsId.get(k)+1, TagsId.get(k+1)));}
+				
+			}
+			}
+			
+			tags.add(wzor.getText(TagsId.get(z-1)+1, wzor.getLength()));
 			System.out.println("RK");
+			title.clear();
+			for(int j =0;j<tags.size();j++) {
 			rabinKarp_Algorithm.RK_algo(odczyt.toString(), tags.get(j));//tags.get(j)
 
 			// KNPrb.setSelected(false);
@@ -96,9 +105,15 @@ public ArrayList<Integer> TagsId= new ArrayList<Integer>();
 				p = (int) rabinKarp_Algorithm.getPocz().get(i);
 				highlightText(p);
 			//	System.out.println(p+"nis");
+				
 
 			}
-			rabinKarp_Algorithm.getPocz().clear();
+			System.out.println(tags);
+			//tags.clear();
+			
+			System.out.println("po "+tags);
+			
+			rabinKarp_Algorithm.getPocz().clear();}
 		} else if(KNPrb.isSelected()){
 			System.out.println("KNP");
 			knuthMorrisPrattAalgorithm.search(wzor.getText().toString(), odczyt.toString());//tags.get(j)
@@ -110,14 +125,22 @@ public ArrayList<Integer> TagsId= new ArrayList<Integer>();
 			knuthMorrisPrattAalgorithm.getPocz().clear();
 		}
 		else {
+			titleArea.clear();
 			System.out.println("metoda3");
 			method3.szukaj(wzor.getText().toString(),odczyt.toString() );
+			for (int i = 0; i <= (method3.getPocz().size() - 1); i++) {
+
+				p = (int) method3.getPocz().get(i);
+				System.out.println(p);
+				highlightText(p+1);
+			}
 		}
 		
-		}
+		//}
 		
 		loadTitle();
 		tags.clear();
+		TagsId.clear();
 	}
 
 	
@@ -185,7 +208,7 @@ public ArrayList<Integer> TagsId= new ArrayList<Integer>();
 	public void highlightText(int pocz) {
 		// if dosn't exist key-word
 		// knuthMorrisPrattAalgorithm.search(wzor.getText().toString(),odczyt.toString());
-		// TODO zapisywanie tytułuów do arrayLIsty by je sortować
+		
 		
 		int start, stop;
 		// start = (int)rabinKarp_Algorithm.getPocz().get(0);
@@ -198,7 +221,7 @@ public ArrayList<Integer> TagsId= new ArrayList<Integer>();
 			System.out.println("nie ma");
 		} else {
 			// for(int k=0;k<arrayStartLine.length;k++)
-			textArea.selectRange(start, stop);
+			//textArea.selectRange(start, stop);
 
 					/*
 			 * 

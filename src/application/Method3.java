@@ -3,13 +3,15 @@ package application;
 import java.util.ArrayList;
 
 public class Method3 {
+	public static ArrayList<Integer> literka = new ArrayList<Integer>();
+	public static ArrayList<Integer> literka2 = new ArrayList<Integer>();
+	public static ArrayList<Integer> literka3 = new ArrayList<Integer>();
 	public Method3() {
 		
 	}
 
 	public static void szukaj(String wzor,String tekst) {
-		ArrayList<Integer> literka = new ArrayList<Integer>();
-		ArrayList<Integer> literka2 = new ArrayList<Integer>();
+	
 		
 		
 //		String wzor = "ala";
@@ -22,8 +24,8 @@ public class Method3 {
 				//System.out.println("jest"+k);
 				if(i==0) {
 				literka.add(k);
-				literka2.add(k);
-				System.out.println(k+"  ");}
+				literka2.add(k);}
+				//System.out.println(k+"  ");}
 				else {
 					//System.out.println(literka);
 					for(int j = 0;j<literka.size();j++) {
@@ -55,6 +57,10 @@ public class Method3 {
 			int y = literka.get(p)-literka2.get(p);
 		if(literka.get(p)-literka2.get(p)==wzor.length()-1)
 		System.out.println("szukany wyzraz zaczyna się tutaj "+literka2.get(p));
+		literka3.add(literka2.get(2));
 		}
+	}
+	public static ArrayList getPocz() {
+		return literka3;
 	}
 }
