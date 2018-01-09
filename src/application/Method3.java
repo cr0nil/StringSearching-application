@@ -11,7 +11,9 @@ public class Method3 {
 	}
 
 	public static void szukaj(String wzor,String tekst) {
-	
+	literka.clear();
+	literka2.clear();
+	literka3.clear();
 		
 		
 //		String wzor = "ala";
@@ -55,12 +57,14 @@ public class Method3 {
 		}
 		for(int p=0;p<literka2.size();p++) {
 			int y = literka.get(p)-literka2.get(p);
-		if(literka.get(p)-literka2.get(p)==wzor.length()-1)
+		if(literka.get(p)-literka2.get(p)==wzor.length()-1) {
 		System.out.println("szukany wyzraz zaczyna się tutaj "+literka2.get(p));
-		literka3.add(literka2.get(2));
+		literka3.add(literka2.get(p));
+		}
 		}
 	}
 	public static ArrayList getPocz() {
 		return literka3;
+	
 	}
 }
