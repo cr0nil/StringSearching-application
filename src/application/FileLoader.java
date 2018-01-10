@@ -67,7 +67,7 @@ public class FileLoader implements Initializable {
 	private TextArea titleArea;
 	@FXML
 	private Button znajdz;
-
+// wybór algorytmu 
 	@FXML
 	public void selectAlgo() {
 		String  time1=null,time2=null,time3=null;
@@ -106,7 +106,7 @@ titleArea.clear();
 				}
 			}
 
-			tags.add(wzor.getText(TagsId.get(z - 1) + 1, wzor.getLength()));
+			tags.add(wzor.getText(TagsId.get(z - 1), wzor.getLength()));
 			titleArea.clear();
 			System.out.println("RK");
 			title.clear();
@@ -207,7 +207,7 @@ titleArea.clear();
 			System.out.println(time3);
 		}}
 		// }
-	
+	//wyświetlenie tytułow i proówanie czasu dzialania algorytmu
 		loadTitle();
 		tags.clear();
 		TagsId.clear();
@@ -218,7 +218,7 @@ titleArea.clear();
 		if(time3!=null)
 				titleArea.appendText("\n"+time3);
 	}
-
+// wczytanie pliku
 	@FXML
 	private void otworzPlikAction(ActionEvent event) {
 
@@ -236,7 +236,7 @@ titleArea.clear();
 
 	}
 
-	// wczytanie pliku tekstowego
+	// wybór pliku
 	public void read(File file) {
 		BufferedReader br = null;
 		Path sciezkaDoPliku = Paths.get(file.getAbsolutePath());
@@ -263,22 +263,22 @@ titleArea.clear();
 		}
 
 	}
-
+// załadowanie pliku na textArea
 	@FXML
 	public void setText(ActionEvent actionEvent) {
 
 		System.out.println(odczyt);
 
-		String kaczka = odczyt.toString();
+		String klucz = odczyt.toString();
 		String text = textArea.getText();
 
-		textArea.setText(kaczka);
+		textArea.setText(klucz);
 		regexChecker("([\\,])", textArea.getText());
 
 		textArea.setWrapText(true);
 
 	}
-
+//zwracanie tytłów filmów 
 	// @FXML
 	public void highlightText(int pocz) {
 		TextFlow flow = new TextFlow();
@@ -324,7 +324,7 @@ titleArea.clear();
 				if (arrayStartLine[i] < start && start < end && arrayLenghtTitle[k + 1] > 2) {
 					// System.out.println(arrayStartLine[i]+" "+(arrayStartLine[i+1]-1)+" out");
 					film = textArea.getText(arrayStartLine[i], arrayLenghtTitle[k + 1]);
-
+System.out.println("poczatek "+arrayStartLine[i]);
 					title.add(film);
 
 				} else if (k == 0 && arrayStartLine[0] > start) {
@@ -360,7 +360,7 @@ titleArea.clear();
 
 		title.clear();
 	}
-
+// zamykanie aplikacji
 	@FXML
 	private void zamknijAplikacje(ActionEvent event) {
 		Optional<ButtonType> result = DialogsUtils.confirmationDialog();
@@ -368,12 +368,12 @@ titleArea.clear();
 			Platform.exit();
 		}
 	}
-
+//dostępnosc przyciku wyszukania filmu 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		znajdz.disableProperty().bind(wzor.textProperty().isEmpty());
 	}
-
+//czytanie nowej lini
 	public void regexChecker(String theRegex, String str2Check) {
 		Pattern pattern = Pattern.compile(theRegex);
 		Matcher regexMatcher = pattern.matcher(str2Check);
@@ -399,7 +399,7 @@ titleArea.clear();
 
 	public int startLine;
 	public int endLine;
-
+// pobieranie i zapisywanie tagów
 	public void tag(String thRege, String str3) {
 		int nextTag;
 		Pattern pattern = Pattern.compile(thRege);
@@ -461,18 +461,6 @@ titleArea.clear();
 		}
 
 	}
-	@FXML
-	public void disable() {
-//		wzor.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//			 
-//		    @Override
-//		    public void handle(KeyEvent event) {
-//		        if(event.getCode().equals(KeyCode.ENTER)) {
-//		             // do somethingw
-//		        	znajdz.setDisable(false);
-//		        }
-//		    }
-//		});
-	}
+
 
 }

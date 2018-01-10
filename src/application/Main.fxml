@@ -36,12 +36,12 @@
         </menus>
       </MenuBar>
       <TextArea fx:id="textArea" layoutY="27.0" prefHeight="367.0" prefWidth="379.0" />
-      <TextField fx:id="wzor" layoutX="200.0" layoutY="411.0" onAction="#disable" onDragDetected="#disable" onKeyPressed="#disable" />
+      <TextField fx:id="wzor" layoutX="200.0" layoutY="411.0" />
       <RadioButton fx:id="RKrb" layoutX="438.0" layoutY="402.0" mnemonicParsing="false" text="RK">
          <toggleGroup>
             <ToggleGroup fx:id="algoGroup" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="KNPrb" layoutX="438.0" layoutY="427.0" mnemonicParsing="false" text="KNP" toggleGroup="$algoGroup" />
+      <RadioButton fx:id="KNPrb" layoutX="438.0" layoutY="427.0" mnemonicParsing="false" text="KMP" toggleGroup="$algoGroup" />
       <Button fx:id="znajdz" disable="true" layoutX="577.0" layoutY="423.0" mnemonicParsing="false" onAction="#selectAlgo" text="Znajdź" />
       <TextArea fx:id="titleArea" layoutX="398.0" layoutY="27.0" prefHeight="367.0" prefWidth="393.0" wrapText="true" />
       <RadioButton layoutX="438.0" layoutY="449.0" mnemonicParsing="false" text="METODA3" toggleGroup="$algoGroup" />
