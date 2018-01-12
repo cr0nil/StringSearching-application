@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class RabinKarp_Algorithm {
 	public static ArrayList<Integer> poczatki = new ArrayList<Integer>();
-	private static final int r = 512; // liczba symboli alfabetu (char 0-255)
+	private static final int r = 255; // liczba symboli alfabetu (char 0-255)
 	private static final int q = 9551; // możliwie duża liczba pierwsza
 
 	public RabinKarp_Algorithm() {
-		final int r = 512;
+		final int r = 255;
 		final int q = 9551;
 		// RK_algo(null, null);
 	}

@@ -1,9 +1,11 @@
 package application;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
+import java.nio.charset.Charset;
 import application.dialogs.DialogsUtils;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -78,11 +80,8 @@ public class FileLoader implements Initializable {
 		// tags.add(wzor.getText(TagsId[0],TagsId[1]));
 
 		int p = 0;
-		// todo
-		// wzor to tags<1,2,3....> wywolane tags.size razy
 
-		// jesli n tagow jest w tej samej lini to zwracam film
-		//	
+		// jesli n tagow jest w tej samej lini to zwracam film z tej lini	
 
 		if (RKrb.isSelected()) {
 			long start = System.nanoTime();
@@ -151,7 +150,6 @@ public class FileLoader implements Initializable {
 				System.out.println(time3);
 			}
 		}
-		// }
 		// wyświetlenie tytułow i proówanie czasu dzialania algorytmu
 		loadTitle();
 		tags.clear();
@@ -246,10 +244,8 @@ public class FileLoader implements Initializable {
 			 * pobrany tag zawierający się miedzy poczatkiem na koncem lini(indeks
 			 * poczatku< tag<indeks konca) indeksy w tablicy
 			 * 
-			 * daje indeks miedzy którymi ma być zwrócony tytuł filmu (getMovie)
 			 */
 			lenghtTitle("([\\:])", textArea.getText());
-
 			// petla do pobierania tytułu filmu w przedziale w którym jest tag
 			int i = 0;
 			int k = 0;//
@@ -320,8 +316,10 @@ public class FileLoader implements Initializable {
 
 			}
 		}
-
-		tags.add(wzor.getText(TagsId.get(z - 1) + 1, wzor.getLength()));
+if(z==1)
+		tags.add(wzor.getText(TagsId.get(z - 1), wzor.getLength()));
+else if(z!=1)
+	tags.add(wzor.getText(TagsId.get(z - 1) + 1, wzor.getLength()));
 	}
 
 	// zamykanie aplikacji
@@ -353,7 +351,12 @@ public class FileLoader implements Initializable {
 				newLineInd = newLineInd - x;
 				x--;
 				textArea.insertText(newLineInd, "\n");
-
+				if (index >= arrayStartLine.length)
+		        {
+		            int [] locTable = new int[arrayStartLine.length*2];
+		            for (int i=0; i<arrayStartLine.length; i++) locTable[i]=arrayStartLine[i];
+		            arrayStartLine = locTable;
+		        }
 				arrayStartLine[index] = newLineInd;
 				// początek każdej lini
 
@@ -382,7 +385,6 @@ public class FileLoader implements Initializable {
 				TagsId.add(i, nextTag);
 				System.out.println(nextTag);
 				i++;
-
 			}
 		}
 
@@ -394,15 +396,24 @@ public class FileLoader implements Initializable {
 		Matcher regexMatcher = pattern.matcher(str3);
 		endLine = 0;
 		int x = 0;
-		int i = 0;
+		int j = 0;
 		while (regexMatcher.find()) {
 			if (regexMatcher.group().length() != 0) {
 
 				endLine = regexMatcher.end();
 
-				arrayLenghtTitle[i] = endLine;
+				
+				if (j >= arrayLenghtTitle.length)
+		        {
+		            int [] locTable = new int[arrayLenghtTitle.length*2];
+		            for (int i=0; i<arrayLenghtTitle.length; i++) locTable[i]=arrayLenghtTitle[i];
+		            arrayLenghtTitle = locTable;
+		        }
+
+				arrayLenghtTitle[j] = endLine;     	// Wstawiamy element
+		       
 				// System.out.println(arrayLenghtTitle[i]);
-				i++;
+				j++;
 
 			}
 		}
