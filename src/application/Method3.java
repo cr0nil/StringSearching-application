@@ -15,42 +15,32 @@ public class Method3 {
 	literka2.clear();
 	literka3.clear();
 		
-		
-//		String wzor = "ala";
-//		String tekst = "ala ma kota magicala";
+	
 		int k =0;
 		int x=0;
 		for(int i =0;i<wzor.length();i++) {
 			for(k=0;k<tekst.length();k++)
 			if(wzor.charAt(i)==tekst.charAt(k)) {
-				//System.out.println("jest"+k);
+				
 				if(i==0) {
 				literka.add(k);
 				literka2.add(k);}
-				//System.out.println(k+"  ");}
+			
 				else {
-					//System.out.println(literka);
+					
 					for(int j = 0;j<literka.size();j++) {
 					
 						if (literka.get(j)-k==-1) {
-							//System.out.println(tekst.charAt(k));
-							//System.out.println("tu jest ma"+literka.get(j)+" "+tekst.charAt(literka.get(j)));
-							//literka2.add
-							
+													
 							literka.set(j, literka.get(j)+1);
-//							literka.clear();
-							
-							//add to array
+
 						}
 						x++;
 					}
 				
 						
 				}
-//				else {
-//					
-//				}
-				//k=tekst.indexOf(tekst.charAt(k));
+
 				
 			}
 			
